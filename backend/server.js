@@ -9,6 +9,11 @@ app.use(cors())
 app.use(bodyParser.json())
 
 
+app.get('/users', (request, response) => {
+    response.json({
+        "message": "you created a user"
+    })
+})
 
 
 /* Routes */

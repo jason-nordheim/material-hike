@@ -1,0 +1,22 @@
+{
+  "name": "fis-capstone",
+  "version": "1.0.0",
+  "description": "capstone project for Flatiron School Software Engineering bootcamp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jason-nordheim/fis-capstone.git"
+  },
+  "author": "Jason Nordheim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jason-nordheim/fis-capstone/issues"
+  },
+  "homepage": "https://github.com/jason-nordheim/fis-capstone#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

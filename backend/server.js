@@ -1,11 +1,14 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const database = require('./config/database')
 const bcrypt = require('bcrypt')    
+const jwt = require('jsonwebtoken')
 
 const PORT = process.env.PORT ||4000
 const HASH_COST = 12 
+
 
 /* Express setup */
 const app = express() 
@@ -40,15 +43,20 @@ app.post('/login', (request, response) => {
         .then(user => {
             if (!user) throw new Error('Invalid username')
 
-            return bcrypt.compare(user.password_digest, password)
-        })
-        .then(passwordMatched => {
-            if (!passwordMatched) throw new Error('Invalid password')
-
-
+            bcrypt.compare(password, user.password_digest)
+            .then(passwordMatched => {
+                if (!passwordMatched) throw new Error('Invalid password')
+                return user
+            })
+            .then(user => {    
+                jwt.sign(user, process.env.SECRET, (error, token) => {
+                    if (error) throw new Error(error.message)
+                    response.status(200).json({token})
+                })}
+            )
         })
         .catch(err => response.status(401).json({error: err.message }))
-})
+})   
 
 
 

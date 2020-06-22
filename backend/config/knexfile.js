@@ -3,6 +3,6 @@
 module.exports = {
   development: {
     client: 'pg',
-    connection: 'postgress:///jcade'
-    }
+    connection: 'postgres:///jcade'
   }
+}

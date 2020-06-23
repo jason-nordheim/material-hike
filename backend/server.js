@@ -47,10 +47,10 @@ app.post('/login', (request, response) => {
             .then(passwordMatched => {
                 if (!passwordMatched) throw new Error('Invalid password')
                 return user
-            })
+            }).catch(err => response.status(401).json({error: err.message }))
             .then(user => {    
                 jwt.sign(user, process.env.SECRET, (error, token) => {
-                    if (error) throw new Error(error.message)
+                    if (error) response.status(401).json({error: error.message})
                     response.status(200).json({token})
                 })}
             )

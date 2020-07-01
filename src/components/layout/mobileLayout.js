@@ -9,7 +9,6 @@ const MobileLayout = props => {
   const classes = useStyles();
   const [authState, authDispatch, login]= useAuthorization()
 
-  return <SignUpPage /> 
   if (!authState.isLoggedIn) {
     return <LoginPage authState={authState} authDispatch={authDispatch} login={login} /> 
   } else {

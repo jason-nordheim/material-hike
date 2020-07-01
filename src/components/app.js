@@ -7,9 +7,9 @@ import LoginPage from '../pages/login'
 const App = () => {
   return (
     <Router>
-      <MobileLayout /> 
+       <SignUpPage />
     </Router>
-  )
+  );
 }
 
 export default App    

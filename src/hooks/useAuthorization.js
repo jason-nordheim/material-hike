@@ -1,23 +1,23 @@
 import React from "react";
 import jwtDecode from "jwt-decode";
 import { post, capitalize } from "../tools/helpers";
-import { act } from 'react-dom/test-utils'
+import { act } from "react-dom/test-utils";
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const AUTHENTICATED = "AUTHENTICATED";
 export const ERROR = "ERROR";
 export const UPDT_USR_FIELD = "USERNAME";
-export const ACCOUNT_CREATED = "ACCOUNT CREATED"
+export const ACCOUNT_CREATED = "ACCOUNT CREATED";
 
 export const AuthorizationAction = {
-         logout: LOGOUT,
-         login: LOGIN,
-         Authenticated: AUTHENTICATED,
-         error: ERROR,
-         updateUserField: UPDT_USR_FIELD,
-         accountCreated: ACCOUNT_CREATED,
-       };
+  logout: LOGOUT,
+  login: LOGIN,
+  Authenticated: AUTHENTICATED,
+  error: ERROR,
+  updateUserField: UPDT_USR_FIELD,
+  accountCreated: ACCOUNT_CREATED,
+};
 
 const loginReducer = (state, action) => {
   switch (action.type) {
@@ -62,8 +62,8 @@ const loginReducer = (state, action) => {
       };
     }
     case UPDT_USR_FIELD: {
-      console.log('field', action.field)
-      console.log('value', action.value)
+      console.log("field", action.field);
+      console.log("value", action.value);
       return {
         ...state,
         user: {
@@ -72,13 +72,13 @@ const loginReducer = (state, action) => {
         },
       };
     }
-
     case ACCOUNT_CREATED: {
       console.log("action", action.value);
       const { id, first, last, email, password_digest, bio } = action.value;
       return {
         ...state,
         isLoading: false,
+        isLoggedIn: true, 
         user: {
           ...state.user,
           id,
@@ -92,9 +92,8 @@ const loginReducer = (state, action) => {
       };
     }
     default:
-      break;
+      return state;
   }
-  return state;
 };
 
 export const getToken = () => window.localStorage.getItem("token");
@@ -166,7 +165,7 @@ const canSignUp = (state, dispatch) => {
     });
     return false;
   }
-  return true 
+  return true;
 };
 
 export const useAuthorization = (initialState = defaultState) => {
@@ -186,7 +185,7 @@ export const useAuthorization = (initialState = defaultState) => {
   };
 
   const signUp = async () => {
-    if(!canSignUp(state, dispatch)) return 
+    if (!canSignUp(state, dispatch)) return;
 
     const sendData = {
       username: state.user.username,
@@ -198,15 +197,14 @@ export const useAuthorization = (initialState = defaultState) => {
     };
 
     const response = await post("/signup", sendData);
-    const resData = await response.json() 
-    console.log("responsedata", resData);
+    const resData = await response.json();
     if (response.status === 200) {
       dispatch({ type: ACCOUNT_CREATED, value: resData.user[0] });
     } else {
       dispatch({ type: ERROR, field: "error", value: resData.user[0].error });
     }
-    console.log('state', state)
   };
 
+  console.log('stateC', state)
   return [state, dispatch, login, signUp];
 };
